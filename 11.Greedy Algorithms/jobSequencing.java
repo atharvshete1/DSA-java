@@ -1,41 +1,53 @@
 import java.util.*;
 
 public class jobSequencing {
-    public static void minJobSequencing(Integer[][] arr) {
-        Arrays.sort(arr, Comparator.comparingInt(b -> b[1]));
+    static class job {
+        int deadline;
+        int profit;
+        int no;
+
+        public job(int no, int deadline, int profit) {
+            this.no = no;
+            this.deadline = deadline;
+            this.profit = profit;
+        }
+    }
+
+    public static void sequecing(int[][] arr) {
+        ArrayList<job> jobsSeq = new ArrayList<>();
         int deadline = 0;
+        for (int i = 0; i < arr.length; i++) {
+            job newJob = new job(i + 1, arr[i][0], arr[i][1]);
+            jobsSeq.add(newJob);
+            if (newJob.deadline > deadline) {
+                deadline = newJob.deadline;
+            }
+        }
+        Collections.sort(jobsSeq, (obj1, obj2) -> obj2.profit - obj1.profit);  //reverse sort
+        job []ans= new job[deadline] ; 
 
-        Queue<Integer> q1 = new LinkedList<>();
-        ArrayList<Integer> a1 = new ArrayList<>();
-        int j = 1;
-        int i = 0;
-        int totalProfit = 0;
-
-        while (i < arr.length  && j <= arr[arr.length-1][1]) {
-            int gretest = 0 ;
-            int grejob = 0 ;
-            while(i < arr.length  && j == arr[i][1]){
-                if(gretest < arr[i][2]){
-                    gretest = arr[i][2] ; 
-                    grejob = arr[i][0];
+        for(int i=0 ; i<jobsSeq.size() ; i++){
+            job curr = jobsSeq.get(i);
+            for(int j = curr.deadline -1 ; j>=0 ;j--){
+                if(ans[j] == null){
+                    ans[j] = curr; 
+                    break ; 
                 }
-                i++ ; 
             }
-            if(gretest == 0 && grejob == 0 ){
-                j++ ; 
-                continue ;
-            }
-            else{
-                a1.add(grejob);
-                j++;
+        }
+        ArrayList<Integer> ans1 = new ArrayList<>();
+        for(int i =0 ; i < ans.length ; i++){
+            if(ans[i] != null){
+                ans1.add(ans[i].no);
             }
         }
 
-       System.out.println(a1);
+        System.out.print((ans1));
     }
 
     public static void main(String[] args) {
-        Integer[][] arr = { { 1, 4, 20 }, { 2, 1, 10 }, { 3, 1, 40 }, { 4, 2, 30 } };
-        minJobSequencing(arr);
+        int[][] arr = { { 4, 90 }, { 3, 50 }, { 3, 40 } };
+        sequecing(arr);
+
     }
 }
