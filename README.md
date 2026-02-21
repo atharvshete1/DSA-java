@@ -47,6 +47,9 @@ Stack-based problems such as Next Greater Element, Stock Span, monotonic stack p
 ### 📁 Queue  
 Queue and deque problems including circular queue implementation and sliding window techniques.
 
+### 📁 Greedy Algorithm 
+Greedy Algorithum Problems and Techniques Which Gives Boost up To logical Thinking with Optimized Solution.
+
 ---
 
 ## 💻 Programming Language
